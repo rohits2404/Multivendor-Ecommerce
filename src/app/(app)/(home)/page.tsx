@@ -1,12 +1,22 @@
-import { Button } from '@/components/ui/button'
+import { getPayload } from 'payload'
+import configPromise from "@payload-config"
 import React from 'react'
 
-const Home = () => {
+const Home = async () => {
+
+    const payload = await getPayload({
+        config: configPromise,
+    })
+
+    const data = await payload.find({
+        collection: "categories"
+    })
+
     return (
         <div className='p-4'>
-            <Button variant={"elevated"}>I am a Button</Button>
+            {JSON.stringify(data,null,2)}
         </div>
     )
 }
 
-export default Home
+export default Home;
