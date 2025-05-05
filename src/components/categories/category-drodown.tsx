@@ -7,9 +7,10 @@ import { cn } from "@/lib/utils";
 import { useDropdownPosition } from "./use-dropdown-position";
 import SubCategoryMenu from "./SubCategoryMenu";
 import Link from "next/link";
+import { CategoriesGetManyOutput } from "@/modules/categories/types";
 
 interface Props {
-    category: Category;
+    category: CategoriesGetManyOutput[1];
     isActive?: boolean;
     isNavigationHovered?: boolean;
 }
@@ -35,7 +36,7 @@ const CategoryDropdown = ({ category, isActive, isNavigationHovered }: Props) =>
     }
 
     const toggleDropdown = () => {
-        if(category.subcategories?.docs?.length) {
+        if(category.subcategories?.length) {
             setIsOpen(!isOpen)
         }
     }

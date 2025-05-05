@@ -7,9 +7,10 @@ import { Button } from '../ui/button';
 import { cn } from '@/lib/utils';
 import { ListFilter } from 'lucide-react';
 import CategoriesSidebar from './CategoriesSidebar';
+import { CategoriesGetManyOutput } from '@/modules/categories/types';
 
 interface CategoriesProps {
-    data: any;
+    data: CategoriesGetManyOutput;
 }
 
 const Categories = ({ data }: CategoriesProps) => {
@@ -60,14 +61,13 @@ const Categories = ({ data }: CategoriesProps) => {
             <CategoriesSidebar
             open={isSidebarOpen}
             onOpenChange={setIsSidebarOpen}
-            data={data}
             />
             <div
             ref={measureRef}
             className='absolute opacity-0 pointer-events-none flex'
             style={{ position: "fixed", top: "-9999", left: "-9999"}}
             >
-                {data.map((category: Category) =>(
+                {data.map((category) =>(
                     <div key={category.id}>
                         <CategoryDropdown
                         category={category}
@@ -84,7 +84,7 @@ const Categories = ({ data }: CategoriesProps) => {
             onMouseEnter={()=>setIsAnyHovered(true)}
             onMouseLeave={()=>setIsAnyHovered(false)}
             >
-                {data.slice(0,visibleCount).map((category: Category) =>(
+                {data.slice(0,visibleCount).map((category) =>(
                     <div key={category.id}>
                         <CategoryDropdown
                         category={category}

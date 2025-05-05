@@ -4,19 +4,24 @@ import { Category } from '@/payload-types';
 import { ScrollArea } from '../ui/scroll-area';
 import { ChevronLeftIcon, ChevronRightIcon } from 'lucide-react';
 import { useRouter } from 'next/navigation';
+import { useTRPC } from '@/trpc/client';
+import { useQuery } from '@tanstack/react-query';
+import { CategoriesGetManyOutput } from '@/modules/categories/types';
 
 interface Props {
     open: boolean;
     onOpenChange: (open: boolean) => void;
-    data: any;
 }
 
-const CategoriesSidebar = ({ open, onOpenChange, data }: Props) => {
+const CategoriesSidebar = ({ open, onOpenChange }: Props) => {
+
+    const trpc = useTRPC();
+    const {data} = useQuery(trpc.categories.getMany.queryOptions());
 
     const router = useRouter();
 
-    const [parentCategory,setParentCategory] = useState<Category[]|null>(null);
-    const [selectedCategory,setSelectedCategory] = useState<Category|null>(null);
+    const [parentCategory,setParentCategory] = useState<CategoriesGetManyOutput|null>(null);
+    const [selectedCategory,setSelectedCategory] = useState<CategoriesGetManyOutput[1]|null>(null);
 
     const currentCategories = parentCategory ?? data ?? [];
 
@@ -26,9 +31,9 @@ const CategoriesSidebar = ({ open, onOpenChange, data }: Props) => {
         onOpenChange(open);
     }
 
-    const handleCategoryClick = (category: Category) => {
+    const handleCategoryClick = (category: CategoriesGetManyOutput[1]) => {
         if(category.subcategories && category.subcategories.length>0) {
-            setParentCategory(category.subcategories as Category[])
+            setParentCategory(category.subcategories as CategoriesGetManyOutput)
             setSelectedCategory(category);
         } else {
             if(parentCategory && selectedCategory) {
@@ -75,7 +80,7 @@ const CategoriesSidebar = ({ open, onOpenChange, data }: Props) => {
                             Back
                         </button>
                     )}
-                    {currentCategories.map((category)=>(
+                    {currentCategories?.map((category)=>(
                         <button
                         onClick={()=>handleCategoryClick(category)}
                         key={category.slug}
