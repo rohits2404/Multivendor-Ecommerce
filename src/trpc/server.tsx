@@ -5,7 +5,6 @@ import React, { cache } from 'react';
 import { createTRPCContext } from './init';
 import { makeQueryClient } from './query-client';
 import { appRouter } from './routers/_app';
-import { dehydrate, HydrationBoundary } from '@tanstack/react-query';
 
 // IMPORTANT: Create a stable getter for the query client that
 //            will return the same client during the same request.
@@ -16,3 +15,5 @@ export const trpc = createTRPCOptionsProxy({
     router: appRouter,
     queryClient: getQueryClient,
 });
+
+export const caller = appRouter.createCaller(createTRPCContext);
