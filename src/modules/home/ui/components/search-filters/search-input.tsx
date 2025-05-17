@@ -2,9 +2,9 @@
 
 import { BookmarkCheckIcon, ListFilterIcon, SearchIcon } from 'lucide-react';
 import React, { useState } from 'react'
-import { Input } from '../ui/input';
-import CategoriesSidebar from '../categories/CategoriesSidebar';
-import { Button } from '../ui/button';
+import { Input } from '../../../../../components/ui/input';
+import CategoriesSidebar from '../../../../../components/categories/CategoriesSidebar';
+import { Button } from '../../../../../components/ui/button';
 import { useTRPC } from '@/trpc/client';
 import { useQuery } from '@tanstack/react-query';
 import Link from 'next/link';
