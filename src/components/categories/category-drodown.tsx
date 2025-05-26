@@ -1,10 +1,8 @@
 "use client"
 
-import { Category } from "@/payload-types";
 import React, { useRef, useState } from 'react'
 import { Button } from "../ui/button";
 import { cn } from "@/lib/utils";
-import { useDropdownPosition } from "./use-dropdown-position";
 import SubCategoryMenu from "./SubCategoryMenu";
 import Link from "next/link";
 import { CategoriesGetManyOutput } from "@/modules/categories/types";
@@ -20,10 +18,6 @@ const CategoryDropdown = ({ category, isActive, isNavigationHovered }: Props) =>
     const [isOpen,setIsOpen] = useState(false);
 
     const dropdownRef = useRef<HTMLDivElement>(null);
-
-    const { getDropdownPosition } = useDropdownPosition(dropdownRef);
-
-    const dropdownPosition = getDropdownPosition();
 
     const onMouseEnter = () => {
         if (category.subcategories) {
@@ -66,7 +60,6 @@ const CategoryDropdown = ({ category, isActive, isNavigationHovered }: Props) =>
             <SubCategoryMenu
             category={category}
             isOpen={isOpen}
-            position={dropdownPosition}
             />
         </div>
     );
